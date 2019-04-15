@@ -1,12 +1,12 @@
 
 let numBalls = 13;
-let spring = 0.01;
-let gravity = 0.03;
+let spring = 0.03;
+let gravity = 0.00;
 let friction = -0.9;
 let balls = [];
 let images = [];
 let bg;
-let font,
+// let sound;
  
 function preload() {
   images.push(loadImage('images/hemsworth.png'));
@@ -19,10 +19,10 @@ function preload() {
   images.push(loadImage('images/bale.png'));
   images.push(loadImage('images/slater.png'));
 
-  // font = loadFont('Helvetica');
 }
 
 function setup() {
+  // sound = loadSound('sounds/tap.wav');
   createCanvas(windowWidth, windowHeight);
   for (let i = 0; i < numBalls; i++) {
     balls[i] = new Ball(
@@ -33,45 +33,41 @@ function setup() {
       balls,
       images[Math.floor(random(0, images.length))],
     );    
-    }
-  
+  }
   noStroke();
   noFill();
+  textSize(15);
   
-  textFont(font);
-  textSize(fontsize);
-  textAlign(CENTER, CENTER);
 }
 
 
 
 function draw() {
   background(175, 251, 255);
-
   textAlign(RIGHT);
-  drawWords(width * 0.25);
 
   balls.forEach(ball => {
     ball.collide();
     ball.move();
     ball.display();
   });
-}
+  
+  // if (sound.isPlaying()) {
+  //   // .isPlaying() returns a boolean
+  //   sound.stop();
+  // } else {
+  //   song.play();
+  // }
 
-function drawWords(x) {
-  // The text() function needs three parameters:
-  // the text to draw, the horizontal position,
-  // and the vertical position
-
-  fill(255);
-  text('Please do not tap on the glass.', x, 290);
-}
-
-//test
-function mousePressed(event) {
-  console.log(event);
-    rect(mouseX, mouseY, 33, 33);
+  if (mouseIsPressed == true) {
+    fill(229, 22, 22);   
   }
+  else {
+    noFill(0);  
+  }
+  text('Please do not tap on the glass. It scares the Chrisses', mouseX, mouseY);
+}
+
 
 class Ball {
   constructor(xin, yin, din, idin, oin, img) {
